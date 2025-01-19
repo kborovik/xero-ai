@@ -1,13 +1,16 @@
 [project]
 authors = [
-    { name = "Konstantin Borovik", email = "kb@lab5.ca" },
+  { name = "Konstantin Borovik", email = "kb@lab5.ca" },
 ]
-dependencies = [  ]
-description = "Process Xero data with AI"
+dependencies = [
+  "pydantic-ai-slim[anthropic,logfire,openai,vertexai]>=0.0.19",
+  "xero-python>=6.3.0",
+]
+description = "Convert unstructured data into structured data for Xero Accounting"
 name = "xero-ai"
 readme = "README.md"
 requires-python = ">=3.12"
-version = "2025.01.17.post1159"
+version = "2025.01.17.post1204"
 
 [project.scripts]
 xero-ai = "xero_ai:main"
@@ -18,7 +21,9 @@ requires = [ "hatchling" ]
 
 [dependency-groups]
 dev = [
-    "ruff>=0.9.2",
+  "pytest>=8.3.4",
+  "python-dotenv>=1.0.1",
+  "ruff>=0.9.2",
 ]
 
 [tool.ruff]
