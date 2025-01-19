@@ -786,7 +786,7 @@ wheels = [
 
 [[package]]
 name = "xero-ai"
-version = "2025.1.17.post1204"
+version = "2025.1.19.post909"
 source = { editable = "." }
 dependencies = [
     { name = "pydantic-ai-slim", extra = ["anthropic", "logfire", "openai", "vertexai"] },

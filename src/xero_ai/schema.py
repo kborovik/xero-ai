@@ -63,7 +63,3 @@ class Bill(BaseModel):
         description="Total of the invoice",
         ge=0,
     )
-    status: str = Field(
-        description="The status of the invoice",
-        default="DRAFT",
-    )

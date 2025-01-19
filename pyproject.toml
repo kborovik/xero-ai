@@ -10,7 +10,7 @@ description = "Convert unstructured data into structured data for Xero Accountin
 name = "xero-ai"
 readme = "README.md"
 requires-python = ">=3.12"
-version = "2025.01.17.post1204"
+version = "2025.01.19.post909"
 
 [project.scripts]
 xero-ai = "xero_ai:main"
