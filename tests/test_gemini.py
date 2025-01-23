@@ -1,8 +1,6 @@
 import base64
 from pathlib import Path
 
-import pytest
-
 from xero_ai.gemini import create_bill
 from xero_ai.types import Bill, DocData, Supplier
 
