@@ -14,6 +14,8 @@ from typing import Any
 import magic
 from pydantic import BaseModel, Field
 
+MAX_FILE_PATH_LEN = 255
+
 
 class MimeTypes(str, Enum):
     """Google Gemini allowed mime types."""
@@ -51,15 +53,19 @@ class DocData(BaseModel):
         if isinstance(self.input_data, bytes):
             self.content = self.input_data
 
-        elif isinstance(self.input_data, str):
+        elif isinstance(self.input_data, str) and len(self.input_data) <= MAX_FILE_PATH_LEN:
             path = Path(self.input_data)
             if path.exists():
-                self.content = path.read_bytes()
-            else:
                 try:
-                    self.content = base64.b64decode(self.input_data)
-                except Exception:
-                    raise ValueError("Invalid base64 data. " + value_error_msg)
+                    self.content = path.read_bytes()
+                except ValueError:
+                    raise ValueError("Invalid file path. " + value_error_msg)
+
+        elif isinstance(self.input_data, str) and len(self.input_data) > MAX_FILE_PATH_LEN:
+            try:
+                self.content = base64.b64decode(self.input_data)
+            except Exception:
+                raise ValueError("Invalid base64 string. " + value_error_msg)
         else:
             raise ValueError(value_error_msg)
 

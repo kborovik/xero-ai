@@ -4,6 +4,7 @@
     "genai",
     "generativeai",
     "LOGFIRE",
+    "pytest",
     "xero"
   ]
 }

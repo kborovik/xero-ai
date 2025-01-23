@@ -678,7 +678,7 @@ wheels = [
 
 [[package]]
 name = "xero-ai"
-version = "2025.1.23.post1113"
+version = "2025.1.23.post1335"
 source = { editable = "." }
 dependencies = [
     { name = "google-genai" },

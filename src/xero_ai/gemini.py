@@ -43,5 +43,7 @@ def create_bill(document: DocData) -> Bill:
 
 if __name__ == "__main__":
     document = DocData(input_data="data/invoice2.pdf")
+    print(document.mime_type)
+    print(document.sha256_sum)
     bill = create_bill(document)
-    print(bill)
+    print(bill.model_dump_json(indent=2))

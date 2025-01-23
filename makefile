@@ -40,9 +40,9 @@ help:
 
 setup: $(uv_bin) .gitignore data .venv .env uv.lock
 
-test: db-schema ## Run Python tests
+test:## Run Python tests
 	$(call header,Running Python tests)
-	pytest -v -m db
+	pytest -v
 
 ruff-format:
 	ruff format .
