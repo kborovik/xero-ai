@@ -63,8 +63,8 @@ clean: ## Reset development environment
 	rm -rf .venv requirements.txt build/ dist/ *.egg-info/
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 
-run-generate: ## Run Python generate module
-	uv run -m invoice_ocr.generate
+run-gemini: ## Run Python module gemini
+	uv run -m xero_ai.gemini
 
 uv_bin := $(HOME)/.cargo/bin/uv
 
