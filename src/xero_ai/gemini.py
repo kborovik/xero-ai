@@ -7,6 +7,8 @@ This module contains AI agents that perform the following tasks:
 
 import json
 
+import logfire
+
 from google import genai
 from google.genai.types import (
     GenerateContentConfig,
@@ -18,11 +20,13 @@ from .settings import GEMINI_API_KEY, GEMINI_MODEL
 from .types import Bill, DocData
 
 
-def create_bill(document: DocData) -> Bill:
-    """Process invoice and return structured data."""
+def process_bill(document: DocData) -> Bill:
+    """Process document and return structured data."""
     bill_schema = json.dumps(Bill.model_json_schema())
 
     client = genai.Client(api_key=GEMINI_API_KEY)
+
+    logfire.info(f"Processing document: {document.sha256_sum}")
 
     response: GenerateContentResponse = client.models.generate_content(
         model=GEMINI_MODEL,
@@ -36,14 +40,14 @@ def create_bill(document: DocData) -> Bill:
         ),
     )
 
-    bill = Bill.model_validate_json(json_data=response.text, strict=True)
-
-    return bill
+    try:
+        bill = Bill.model_validate_json(json_data=response.text, strict=False)
+        logfire.info(f"Processed document: {document.sha256_sum}, Invoice Number: {bill.invoice_number}, Supplier: {bill.supplier.name}")
+        return bill
+    except Exception as e:
+        logfire.error(f"Error processing document: {document.sha256_sum}, Error: {e}")
+        raise e
 
 
 if __name__ == "__main__":
-    document = DocData(input_data="data/invoice2.pdf")
-    print(document.mime_type)
-    print(document.sha256_sum)
-    bill = create_bill(document)
-    print(bill.model_dump_json(indent=2))
+    pass

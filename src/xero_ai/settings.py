@@ -17,5 +17,4 @@ dotenv.load_dotenv()
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 GEMINI_MODEL = "gemini-2.0-flash-exp"
 
-LOG_LEVEL = os.environ.get("LOG_LEVEL", default="INFO")
 LOGFIRE_SERVICE_NAME = os.environ.get("LOGFIRE_SERVICE_NAME", default="xero-ai")

@@ -1,7 +1,7 @@
 import base64
 from pathlib import Path
 
-from xero_ai.gemini import create_bill
+from xero_ai.gemini import process_bill
 from xero_ai.types import Bill, DocData, Supplier
 
 bill1 = Bill(
@@ -66,9 +66,9 @@ def test_doc_data_base64_1():
     )
 
 
-def test_create_bill_1():
+def test_process_bill_1():
     document = DocData(input_data="tests/invoice1.pdf")
-    bill = create_bill(document)
+    bill = process_bill(document)
     assert bill == bill1, "Values of object Bill should be equal to test data"
 
 
@@ -86,7 +86,7 @@ def test_doc_data_base64_2():
     )
 
 
-def test_create_bill_2():
+def test_process_bill_2():
     document = DocData(input_data="tests/invoice2.pdf")
-    bill = create_bill(document)
+    bill = process_bill(document)
     assert bill == bill2, "Values of object Bill should be equal to test data"
