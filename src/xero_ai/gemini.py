@@ -8,7 +8,6 @@ This module contains AI agents that perform the following tasks:
 import json
 
 import logfire
-
 from google import genai
 from google.genai.types import (
     GenerateContentConfig,

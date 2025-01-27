@@ -22,6 +22,7 @@ TEST_BILL = Bill(
     total=2497.16,
 )
 
+
 def doc_data_pdf(file_path: str, sha256_sum: str) -> None:
     document = DocData(input_data=file_path)
     assert document.mime_type == "application/pdf", "Mime type should be application/pdf"
