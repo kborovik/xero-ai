@@ -4,39 +4,23 @@ from pathlib import Path
 from xero_ai.gemini import process_bill
 from xero_ai.types import Bill, DocData, Supplier
 
-bill1 = Bill(
-    invoice_number="5142408989",
-    date="2024-12-31T00:00:00",
+TEST_FILE = "tests/INV-2878.pdf"
+TEST_SHA256 = "3069cf85a04ec21966b93c541bd02985e82a8953222ac948914d8443b7fb7b9a"
+TEST_BILL = Bill(
+    invoice_number="INV-2878",
+    date="2025-01-26T00:00:00",
     supplier=Supplier(
-        name="Google LLC",
-        address="1600 Amphitheatre Pkwy\nMountain View, CA 94043\nUnited States",
-        email=None,
-        phone=None,
-        tax_number="852407436 RT9999",
+        name="Aerodynamic Frontier Technologies",
+        address="1234 Innovation Drive, Suite 450\nVancouver, British Columbia V6C 2T6",
+        email="contact@aerodynamicfrontier.com",
+        phone="+1 (604) 555-7890",
+        tax_number=None,
     ),
     currency_code="CAD",
-    sub_total=22.03,
-    total_tax=0.0,
-    total=22.03,
+    sub_total=2209.88,
+    total_tax=287.28,
+    total=2497.16,
 )
-
-
-bill2 = Bill(
-    invoice_number="8642EB5C-0002",
-    date="2025-01-20T00:00:00",
-    supplier=Supplier(
-        name="Midjourney Inc",
-        address="611 Gateway Blvd\nSuite 120\nSouth San Francisco, California 94080\nUnited States",
-        email="billing@midjourney.com",
-        phone=None,
-        tax_number="791262355RT9999",
-    ),
-    currency_code="USD",
-    sub_total=10.0,
-    total_tax=1.3,
-    total=11.3,
-)
-
 
 def doc_data_pdf(file_path: str, sha256_sum: str) -> None:
     document = DocData(input_data=file_path)
@@ -52,41 +36,21 @@ def doc_data_base64(file_path: str, sha256_sum: str) -> None:
     assert document.sha256_sum == sha256_sum, "Sha256 sum should be correct"
 
 
-def test_doc_data_pdf_1():
+def test_doc_data_pdf():
     doc_data_pdf(
-        file_path="tests/invoice1.pdf",
-        sha256_sum="5525ab3992594ce8d5723f15dac57cda2d9f1dc0f8e1ac232f6a213d777f8489",
+        file_path=TEST_FILE,
+        sha256_sum=TEST_SHA256,
     )
 
 
-def test_doc_data_base64_1():
+def test_doc_data_base64():
     doc_data_base64(
-        file_path="tests/invoice1.pdf",
-        sha256_sum="5525ab3992594ce8d5723f15dac57cda2d9f1dc0f8e1ac232f6a213d777f8489",
+        file_path=TEST_FILE,
+        sha256_sum=TEST_SHA256,
     )
 
 
-def test_process_bill_1():
-    document = DocData(input_data="tests/invoice1.pdf")
+def test_process_bill():
+    document = DocData(input_data=TEST_FILE)
     bill = process_bill(document)
-    assert bill == bill1, "Values of object Bill should be equal to test data"
-
-
-def test_doc_data_pdf_2():
-    doc_data_pdf(
-        file_path="tests/invoice2.pdf",
-        sha256_sum="1be13bc8f2bd08352fc63922ea4ae4a10480f3085d126b01f1e64d2d9c676ae0",
-    )
-
-
-def test_doc_data_base64_2():
-    doc_data_base64(
-        file_path="tests/invoice2.pdf",
-        sha256_sum="1be13bc8f2bd08352fc63922ea4ae4a10480f3085d126b01f1e64d2d9c676ae0",
-    )
-
-
-def test_process_bill_2():
-    document = DocData(input_data="tests/invoice2.pdf")
-    bill = process_bill(document)
-    assert bill == bill2, "Values of object Bill should be equal to test data"
+    assert bill == TEST_BILL, "Values of object Bill should be equal to test data"

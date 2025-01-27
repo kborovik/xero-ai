@@ -42,11 +42,13 @@ def process_bill(document: DocData) -> Bill:
 
     try:
         bill = Bill.model_validate_json(json_data=response.text, strict=False)
-        logfire.info(f"Processed document: {document.sha256_sum}, Invoice Number: {bill.invoice_number}, Supplier: {bill.supplier.name}")
+        logfire.info(
+            f"Processed document: {document.sha256_sum}, Invoice Number: {bill.invoice_number}, Supplier: {bill.supplier.name}"
+        )
         return bill
-    except Exception as e:
-        logfire.error(f"Error processing document: {document.sha256_sum}, Error: {e}")
-        raise e
+    except Exception as error:
+        logfire.error(f"Error processing document: {document.sha256_sum}, Error: {error}")
+        raise error
 
 
 if __name__ == "__main__":
